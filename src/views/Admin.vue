@@ -1,5 +1,8 @@
 <template>
   <b-card>
+    <div>
+      <b-button @click="adduser">Add</b-button>
+    </div>
     <b-list-group>
       <b-list-group-item action v-for="(user, index) in users" :key="index">
         <div class="d-flex justify-content-between">
@@ -29,6 +32,11 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getUsers");
+  },
+  methods: {
+    adduser() {
+      this.$router.push({ name: "CreateUser" });
+    },
   },
 };
 </script>

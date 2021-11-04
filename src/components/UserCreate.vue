@@ -1,8 +1,27 @@
+/* eslint-disable no-unused-vars */
 <template>
   <b-card>
-    <div class="d-flex">Edit user {{ user.email }}</div>
+    <div class="d-flex">Create user</div>
     <b-form @submit.prevent="submit" id="myform">
       <div v-if="error">error: {{ error }}</div>
+      <b-form-group id="input-group-0" label="Username:" label-for="input-0">
+        <b-form-input
+          id="input-0"
+          v-model="user.email"
+          type="email"
+          placeholder="email"
+          required
+        ></b-form-input>
+      </b-form-group>
+      <b-form-group id="input-group-1" label="Username:" label-for="input--1">
+        <b-form-input
+          id="input--1"
+          type="password"
+          v-model="user.password"
+          placeholder="password"
+          required
+        ></b-form-input>
+      </b-form-group>
       <b-form-group id="input-group-1" label="Username:" label-for="input-1">
         <b-form-input
           id="input-1"
@@ -50,13 +69,12 @@
       </b-form-group>
     </b-form>
     <b-button type="submit" form="myform"> save</b-button>
-    <b-button type="delete" @click="deleteUser"> Delete</b-button>
   </b-card>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import { db, functions } from "../firebase";
+import { functions } from "../firebase";
 export default {
   computed: {
     ...mapState({ users: (state) => state.users }),
@@ -65,6 +83,8 @@ export default {
     return {
       user: {
         id: null,
+        email: null,
+        password: null,
         username: null,
         address: null,
         active: false,
@@ -76,37 +96,22 @@ export default {
       error: null,
     };
   },
-  mounted() {
-    db.collection("users")
-      .doc(this.$route.query.user)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          this.user = {
-            id: doc.id,
-            ...doc.data(),
-          };
-        }
-      });
-  },
+  mounted() {},
   methods: {
     async submit() {
-      await db.collection("users").doc(this.user.id).update(this.user);
-      this.$router.go(-1);
-    },
-    async deleteUser() {
-      // api call
-      let deleteUser = functions.httpsCallable("deleteUser");
       try {
-        let res = await deleteUser(this.user.id);
-        console.log(res);
+        let register = functions.httpsCallable("register");
+        let res = await register(this.user);
+        console.log(res.data);
+
         if (res.data.success) {
           this.$router.go(-1);
         } else {
-          this.error = res.data.error;
+          this.error = res.data;
         }
       } catch (error) {
         this.error = error.message;
+        console.log(error.message);
       }
     },
   },

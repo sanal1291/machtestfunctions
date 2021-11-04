@@ -6,6 +6,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Admin from '../views/Admin.vue'
 import UserEdit from '../components/UserEdit'
+import UserCreate from '../components/UserCreate'
 
 
 Vue.use(VueRouter)
@@ -31,6 +32,14 @@ const routes = [
     path: '/admin/edituser',
     name: "edituser",
     component: UserEdit,
+    meta: {
+      requiresAdmin: true,
+    }
+  },
+  {
+    path: '/admin/createuser',
+    name: "CreateUser",
+    component: UserCreate,
     meta: {
       requiresAdmin: true,
     }
