@@ -24,7 +24,11 @@ export default {
   methods: {
     async logout() {
       try {
-        this.userSnapshot();
+        try {
+          this.userSnapshot();
+        } catch (error) {
+          console.log(error.message);
+        }
         await auth.signOut();
         this.$router.replace("/login");
       } catch (error) {

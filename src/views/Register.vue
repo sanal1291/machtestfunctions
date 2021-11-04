@@ -81,6 +81,8 @@ export default {
 
         if (res.data.success) {
           await auth.signInWithEmailAndPassword(this.email, this.password);
+
+          this.$router.replace({ name: "Home" });
         } else {
           this.error = res.data;
         }
