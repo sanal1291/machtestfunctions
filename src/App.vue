@@ -1,15 +1,20 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <navigationbar />
+    <router-view />
   </div>
 </template>
 
+<script>
+import Navigationbar from "./components/layouts/Navigationbar.vue";
+export default {
+  components: {
+    Navigationbar,
+  },
+};
+</script>
 <style lang="scss">
-#app {
+#a Navigationbarpp {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
