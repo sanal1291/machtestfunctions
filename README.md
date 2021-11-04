@@ -15,3 +15,4 @@ npm run serve
 npm run build
 ```
 
+# After serve run functions emulators

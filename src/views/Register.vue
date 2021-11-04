@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { functions } from "../firebase";
+import { auth, functions } from "../firebase";
 export default {
   data() {
     return {
@@ -80,7 +80,7 @@ export default {
         console.log(res.data);
 
         if (res.data.success) {
-          this.$router.replace({ name: "Login" });
+          await auth.signInWithEmailAndPassword(this.email, this.password);
         } else {
           this.error = res.data;
         }
